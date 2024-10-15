@@ -1,0 +1,25 @@
+{% extends "Food/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        {% for item in items %}
+            <!-- Each card takes 6 columns (half of the row), so 2 cards will fit per row -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.item_name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.item_name }}</h5>
+                        <p class="card-text">{{ item.item_desc }}</p>
+                        <p class="card-text">{{ item.item_price }}$</p>
+                        <a href="{% url 'food:detail_view' item.id %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

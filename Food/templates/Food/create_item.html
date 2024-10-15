@@ -1,0 +1,18 @@
+{% extends "Food/base.html" %}
+
+{% block content %}
+
+<form action='{% if item %}{% url "food:update_item" item.id %}{% else %}{% url "food:add_item" %}{% endif %}'
+    method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-dark">
+        {% if item %}
+        Update Item
+        {% else %}
+        Add Item
+        {% endif %}
+    </button>
+</form>
+
+{% endblock content %}
