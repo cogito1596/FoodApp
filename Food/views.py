@@ -5,6 +5,7 @@ from .forms import itemForm
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -35,11 +36,14 @@ def detail_view(request, Item_id):
     return render(request, "food/detail_view.html", context)
 
 
+@login_required
 def add_item(request):
     if request.method == "POST":
         form = itemForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            Item = form.save(commit=False)
+            Item.user_name = request.user
+            Item.save()
             return redirect("food:index")
 
     else:
